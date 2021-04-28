@@ -16,6 +16,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
 
+
 /**
  * Created by sabzo on 1/14/18.
  */
@@ -26,7 +27,7 @@ class Bluetooth(private val context: Context, /* Bluetooth Events Interface */
     private var intentFilter: IntentFilter? = null
     private var discoveryInitiated = false
     private val deviceNamesDiscovered: MutableSet<String>
-    val deviceList: HashMap<String, BluetoothDevice>
+    val deviceList: HashMap<String?, BluetoothDevice>
     private var pairedDevices: Set<BluetoothDevice>? = null
     private val dataTransferThreads: HashMap<String, DataTransferThread?>
     var REQUEST_ENABLE_BT = 1
@@ -169,9 +170,11 @@ class Bluetooth(private val context: Context, /* Bluetooth Events Interface */
     private fun deviceFound(intent: Intent) {
         val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
         val d = Device(device)
-        val deviceName = if (d.getDeviceName() == null) d.deviceAddress else d.getDeviceName()!!
+        val deviceName = if (d.getDeviceName() == null) d.getDeviceAddress() else d.getDeviceName()!!
         deviceList[deviceName] = device
-        deviceNamesDiscovered.add(deviceName)
+        if (deviceName != null) {
+            deviceNamesDiscovered.add(deviceName)
+        }
         iBluetooth.actionFound(intent)
     }
 
@@ -224,20 +227,26 @@ class Bluetooth(private val context: Context, /* Bluetooth Events Interface */
     /**
      * Represents a Bluetooth Device
      */
-    class Device(val device: BluetoothDevice) {
-        private val deviceName: String
-        val deviceAddress // MAC address
-                : String
-
-        fun getDeviceName(): String? {
-            return deviceName
+    class Device(device: BluetoothDevice){
+        private var device : BluetoothDevice? = null;
+        private var deviceName : String? = null;
+        private var deviceAddress : String? = null;
+        init{
+            this.device = device;
+            deviceName = device.name;
+            deviceAddress = device.address;
         }
-
-        init {
-            deviceName = device.name
-            deviceAddress = device.address // MAC address
+        fun getDeviceName(): String? {
+            return deviceName;
+        }
+        fun getDeviceAddress(): String? {
+            return deviceAddress;
+        }
+        fun getDevice(): BluetoothDevice? {
+            return device;
         }
     }
+
 
     /**
      * Connects, as a client,  to a Bluetooth Device

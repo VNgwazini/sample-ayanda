@@ -67,7 +67,7 @@ class Ayanda(private val context: Context, iBluetooth: IBluetooth?, iLan: ILan?,
         return bt!!.getDeviceNamesDiscovered()
     }
 
-    fun btGetDevices(): HashMap<String, BluetoothDevice> {
+    fun btGetDevices(): HashMap<String?, BluetoothDevice> {
         return bt!!.deviceList
     }
 
