@@ -92,7 +92,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }, null, null);
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                Bluetooth.BT_PERMISSION_REQUEST_LOCATION);
+                Bluetooth.Companion.getBT_PERMISSION_REQUEST_LOCATION());
         setContentView(R.layout.bluetooth_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

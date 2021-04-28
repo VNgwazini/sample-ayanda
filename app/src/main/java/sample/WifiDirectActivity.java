@@ -202,7 +202,7 @@ public class WifiDirectActivity extends AppCompatActivity {
                 //get a JSON reprecation of the metadata we want to share
                 Gson gson = new GsonBuilder()
                         .setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
-                nearbyMedia.mMetadataJson = gson.toJson("key:value");
+                nearbyMedia.setMetadataJson(gson.toJson("key:value"));
 
                 a.wdShareFile(nearbyMedia);
             } catch (IOException e) {

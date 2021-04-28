@@ -37,6 +37,7 @@ import java.util.List;
 import sintulabs.ayanda.R;
 import sintulabs.p2p.Ayanda;
 import sintulabs.p2p.ILan;
+import sintulabs.p2p.IServer;
 import sintulabs.p2p.NearbyMedia;
 import sintulabs.p2p.Neighbor;
 import sintulabs.p2p.WifiDirect;
@@ -150,7 +151,7 @@ public class LanActivity extends AppCompatActivity {
 
        verifyStoragePermissions(this);
         try {
-            a.setServer(new MyServer(this, Ayanda.findOpenSocket()));
+            a.setServer((IServer) new MyServer(this, Ayanda.Companion.findOpenSocket()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -271,7 +272,7 @@ public class LanActivity extends AppCompatActivity {
             //get a JSON representation of the metadata we want to share
             Gson gson = new GsonBuilder()
                     .setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
-            nearbyMedia.mMetadataJson = gson.toJson("key:value");
+            nearbyMedia.setMetadataJson(gson.toJson("key:value"));
             try {
                 a.lanShare(nearbyMedia);
             } catch (IOException e) {

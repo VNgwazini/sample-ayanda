@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
-import sintulabs.p2p.ILan;
 import sintulabs.p2p.IServer;
 import sintulabs.p2p.NearbyMedia;
 
@@ -24,7 +23,7 @@ import sintulabs.p2p.NearbyMedia;
  * Created by sabzo on 3/22/18.
  */
 
-public class MyServer extends NanoHTTPD implements IServer{
+public class MyServer extends NanoHTTPD implements IServer {
 
     public final static String SERVICE_DOWNLOAD_FILE_PATH = "/ayanda/file";
     public final static String SERVICE_DOWNLOAD_METADATA_PATH = "/ayanda/meta";
@@ -58,7 +57,7 @@ public class MyServer extends NanoHTTPD implements IServer{
         } else if (session.getUri().endsWith(SERVICE_DOWNLOAD_FILE_PATH)) {
             try {
 
-                Response response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, fileToShare.mMimeType, new FileInputStream(fileToShare.getFileMedia()));
+                Response response = NanoHTTPD.newChunkedResponse(NanoHTTPD.Response.Status.OK, fileToShare.getmMimeType(), new FileInputStream(fileToShare.getFileMedia()));
                 if (response != null) {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
